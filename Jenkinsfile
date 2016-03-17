@@ -1,14 +1,10 @@
 node('jdk7') {
 
 	stage 'build'
-		env.PATH="${tool 'mvn-3.3.3-x'}/bin:${env.PATH}"
-		checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/issc29/workflow-demo']]])
-		sh 'mvn clean package'
-		archive 'target/*.war'
+		echo "build"
 
 	stage 'integration-test'
-		sh 'mvn verify'
-		step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml', healthScaleFactor: 1.0])
+		echo "integration"
 }
 
 stage 'quality-and-functional-test'
